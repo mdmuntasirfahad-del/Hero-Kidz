@@ -9,6 +9,7 @@ import {
   FaCartPlus,
   FaEye,
 } from "react-icons/fa";
+import AddToCart from "../buttons/AddToCart";
 
 const ProductCard = ({ product }) => {
     console.log(product)
@@ -117,10 +118,7 @@ const ProductCard = ({ product }) => {
         <div className="flex gap-2 mt-4">
 
           {/* Add To Cart */}
-          <button className="btn btn-primary flex-1">
-            <FaCartPlus className="text-lg" />
-            Add to Cart
-          </button>
+          <AddToCart></AddToCart>
 
           {/* View Details */}
           <Link href={`/products/${_id}`}

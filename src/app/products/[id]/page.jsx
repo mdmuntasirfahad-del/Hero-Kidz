@@ -7,9 +7,88 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-const ProductDetails = async ({params}) => {
-    const {id} = await params;
-    const product = await getSingleProduct(id)
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+
+  const product = await getSingleProduct(id);
+
+  if (!product) {
+    return {
+      title: "Product Not Found | Hero Kidz",
+      description: "The requested product could not be found.",
+    };
+  }
+
+  const title = `${product.title} | Hero Kidz`;
+
+  const description =
+    product.description ||
+    `Explore ${product.title} at Hero Kidz. Discover educational and engaging products for children.`;
+
+  return {
+    title,
+
+    description,
+
+    keywords: [
+      product.title,
+      "Hero Kidz",
+      "educational toys",
+      "learning toys",
+      "kids products",
+    ],
+
+    alternates: {
+      canonical: `/products/${id}`,
+    },
+
+    openGraph: {
+      type: "website",
+
+      url: `/products/${id}`,
+
+      siteName: "Hero Kidz",
+
+      title,
+
+      description,
+
+      images: [
+        {
+          url:
+            product.image ||
+            "https://i.ibb.co/prWTMHrK/image.png",
+          width: 1200,
+          height: 630,
+          alt: product.title,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+
+      title,
+
+      description,
+
+      images: [
+        product.image ||
+        "https://i.ibb.co/prWTMHrK/image.png",
+      ],
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+
+const ProductDetails = async ({ params }) => {
+  const { id } = await params;
+  const product = await getSingleProduct(id)
   // Destructure product
   const {
     title,
@@ -295,8 +374,8 @@ const ProductDetails = async ({params}) => {
                         star === 5
                           ? 80
                           : star === 4
-                          ? 15
-                          : 5
+                            ? 15
+                            : 5
                       }
                       max="100"
                     />
